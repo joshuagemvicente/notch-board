@@ -4,16 +4,13 @@ Thanks for helping. Keep changes focused and match the existing Swift / SwiftUI 
 
 ## Setup
 
-1. Install [Xcode](https://apps.apple.com/app/xcode/id497799835) (full app, not only Command Line Tools).
-2. Install [XcodeGen](https://github.com/yonaskolb/XcodeGen): `brew install xcodegen`
-3. Clone the repo, then:
+Prefer the **SweetPad** path in [README.md](README.md) (Cursor / VS Code). Short version:
 
-```bash
-xcodegen generate
-open NotchBoard.xcodeproj
-```
+1. Install [Xcode](https://apps.apple.com/app/xcode/id497799835) (full app) + `brew install xcodegen`
+2. Install the **SweetPad** extension
+3. `xcodegen generate` → **SweetPad: Build & Run** (scheme **NotchBoard**)
 
-Or build from the CLI (see README).
+Or open `NotchBoard.xcodeproj` in Xcode / use the CLI (same README).
 
 ## Credentials
 

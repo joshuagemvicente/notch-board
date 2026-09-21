@@ -1,122 +1,153 @@
 # NotchBoard
 
-A macOS menu bar app that puts your kanban boards one click away from the notch.
-Connects to **Trello**, **GitHub Projects (v2)**, **Linear**, **Jira Cloud**, and
-**Azure DevOps**, and surfaces the boards most relevant to what you're working
-on *right now* — the **focus/context** twist:
+A macOS notch app for your boards — **Trello**, **GitHub Projects**, **Linear**, **Jira**, and **Azure DevOps**.
 
-1. **Pinned** boards (explicit override, always on top)
-2. Boards with **your overdue / due-soon / stale assigned cards**
-3. **Recently active** boards
-4. The GitHub project of the **repo you're actively working in** (detected from
-   the frontmost app: Terminal, iTerm2, or VS Code)
+Boards you care about float up first (pins, your overdue work, recent activity, and the repo you’re in). Expand the island → open a board → list or kanban, move cards, focus a task, track time.
 
-Click a board → it opens in your browser. No inline kanban in v1, but the data
-model keeps cards/columns so it can be added without a migration.
+Requires **macOS 14+**.
 
-## Download
+---
 
-Prebuilt builds ship on **GitHub Releases** (once the repo is published and a
-`v*` tag is pushed):
+## Download (no build)
 
-**[Download latest release](https://github.com/joshuagemvicente/NotchBoard/releases/latest)**
-
-1. Download `NotchBoard-*.zip`
-2. Unzip and drag `NotchBoard.app` into `/Applications`
-3. First launch (unsigned builds): right-click the app → **Open**, or clear
-   quarantine:
+1. Grab the latest zip from **[Releases](https://github.com/joshuagemvicente/NotchBoard/releases/latest)**
+2. Unzip → drag `NotchBoard.app` to `/Applications`
+3. First launch (unsigned builds): right-click → **Open**, or:
 
 ```bash
 xattr -cr /Applications/NotchBoard.app
 open /Applications/NotchBoard.app
 ```
 
-Requires **macOS 14+**.
+---
 
-> **Gatekeeper:** CI builds are ad-hoc signed (no Apple Developer ID / notarization
-> yet). That is normal for early open-source macOS apps. Notarized releases can
-> be added later with a Developer ID certificate.
+## Develop with SweetPad (recommended)
 
-## Build from source
+Best path if you use **Cursor** or **VS Code**.
 
-### Prerequisites
+### 1. Install tools
 
-- **Xcode** (Mac App Store — SwiftData `@Model` macros need the full toolchain)
-- **XcodeGen** (`brew install xcodegen`)
+| Need | How |
+|------|-----|
+| **Xcode** | Mac App Store (full app — not just CLI tools) |
+| **XcodeGen** | `brew install xcodegen` |
+| **SweetPad** | VSCode Extensions → search **SweetPad** → Install |
 
-### Run (Debug)
+### 2. Generate the Xcode project
+
+```bash
+cd NotchBoard
+xcodegen generate
+```
+
+Re-run `xcodegen generate` whenever you change `project.yml` or add/remove source folders.
+
+### 3. Build & run
+
+1. Open this folder in Cursor / VS Code  
+2. Command Palette (`⌘⇧P`) → **SweetPad: Build & Run** (or use the SweetPad sidebar)  
+3. Pick scheme **NotchBoard** → destination **My Mac**
+
+The app is a menu-bar / notch UI (`LSUIElement`) — look at the **top of the screen**, not the Dock.
+
+### SweetPad tips
+
+- **Build** — compile without launching  
+- **Build & Run** — launch the Debug app  
+- **Test** — run `NotchBoardTests`  
+- If indexing feels stuck: regenerate (`xcodegen generate`), then SweetPad → select the `NotchBoard` scheme again  
+
+This repo already points SweetPad at `NotchBoard.xcodeproj` (see `.vscode/settings.json`).
+
+---
+
+## Or use Xcode
 
 ```bash
 xcodegen generate
-xcodebuild -project NotchBoard.xcodeproj -scheme NotchBoard \
-  -destination 'platform=macOS' -derivedDataPath build build
+open NotchBoard.xcodeproj
+```
+
+Select scheme **NotchBoard** → **My Mac** → `⌘R`.
+
+---
+
+## Or use the CLI
+
+```bash
+xcodegen generate
+xcodebuild -scheme NotchBoard -destination 'platform=macOS' build
+# then open the built .app from DerivedData, or:
+xcodebuild -scheme NotchBoard -destination 'platform=macOS' \
+  -derivedDataPath build build
 open build/Build/Products/Debug/NotchBoard.app
 ```
 
-### Package a distributable zip
+**Package a zip for sharing:**
 
 ```bash
 ./scripts/package.sh
 # → dist/NotchBoard-<version>.zip
 ```
 
-## Credentials
+---
 
-- **Trello:** create a Power-Up at <https://trello.com/power-ups/admin> to get
-  an API key, tap **Get token in browser**, approve NotchBoard, then paste the
-  token (Trello does not support custom URL-scheme callbacks).
-- **GitHub:** classic PAT with `project` + `repo`, or OAuth via
-  `OAuthGitHubClientID` (+ optional `OAuthGitHubClientSecret`) in Info.plist.
-  Card moves need Projects **Write**.
-- **Linear:** personal API key, or `OAuthLinearClientID` / secret.
-- **Jira Cloud:** site + email + API token, or Atlassian OAuth
-  (`OAuthJiraClientID`). Account must be able to transition issues.
-- **Azure DevOps:** org + PAT with Work Items (Read & Write), or Entra OAuth
-  (`OAuthAzureClientID`).
+## Connect accounts
 
-For GitHub / Linear / Jira / Azure OAuth, register the redirect URI as
-`notchboard://oauth/callback`. Personal tokens remain available as a fallback.
-Do not commit real OAuth secrets — leave the plist keys empty for public builds.
+Open **Settings** from the island / menu and add a service. Personal tokens work out of the box.
 
-## Tests
+| Service | What you need |
+|---------|----------------|
+| **Trello** | API key + token ([Power-Ups admin](https://trello.com/power-ups/admin)) — use **write** scope for moves |
+| **GitHub** | PAT with `project` + `repo` (Projects **Write** to move cards) |
+| **Linear** | API key with write access |
+| **Jira** | Site + email + API token |
+| **Azure DevOps** | Org + PAT (Work Items Read & Write) |
 
-```bash
-xcodebuild test -project NotchBoard.xcodeproj -scheme NotchBoard \
-  -destination 'platform=macOS'
-```
+Optional OAuth: set `OAuth*` keys in `project.yml` / Info.plist and register redirect `notchboard://oauth/callback`. **Don’t commit real secrets.**
 
-## Architecture
+**Permissions that help:** Accessibility (VS Code repo detection), Calendar (meeting countdown). Missing ones just skip those features.
 
-```
-App/         NotchBoardApp (MenuBarExtra + Settings scenes), BoardStore (orchestrator)
-Models/      SwiftData: Account, Board, Card, Column + API DTOs
-Providers/   BoardProvider protocol → TrelloProvider (REST), GitHubProvider (GraphQL),
-             GraphQLClient, KeychainService (tokens never touch SwiftData)
-Focus/       FocusEngine (pure ranking, unit-tested), RankInputBuilder, FocusSettings
-ActiveRepo/  ActiveRepoDetector (NSWorkspace + AppleScript), GitRemoteParser
-Views/       PopoverView (focus shortlist + all boards), BoardRowView, SettingsView
-```
+---
 
-Notes:
-- Unsandboxed on purpose: Apple Events automation for frontmost-app detection.
-- VS Code detection needs Accessibility permission (System Settings →
-  Privacy & Security → Accessibility). Missing permission degrades silently.
-- iTerm2 detection needs Shell Integration (`session.path`).
-- OAuth Connect uses `notchboard://oauth/callback` (configure client IDs in Info.plist).
+## Test
 
-## Website
+**SweetPad:** Command Palette → **SweetPad: Test**
 
-Marketing site (Next.js + shadcn + Manrope) lives in [`website/`](website/):
+**CLI:**
 
 ```bash
-cd website && npm install && npm run dev
+xcodegen generate
+xcodebuild test -scheme NotchBoard -destination 'platform=macOS'
 ```
 
-## Contributing
+---
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, PR expectations, and how
-maintainers cut a release (`git tag v0.1.0` → GitHub Actions attaches the zip).
+## Website (landing page)
 
-## License
+```bash
+cd website
+npm install
+npm run dev
+```
 
-[MIT](LICENSE)
+Open [http://localhost:3000](http://localhost:3000). More in [`website/README.md`](website/README.md).
+
+---
+
+## Project map
+
+```
+NotchBoard/     App, notch UI, providers, focus engine
+NotchBoardTests Unit tests
+project.yml     XcodeGen project definition
+skills/         Local agent / design skills
+website/        Next.js marketing site
+```
+
+---
+
+## Contributing & license
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for PRs and releases.  
+License: [MIT](LICENSE)
