@@ -1,0 +1,57 @@
+name: NotchBoard
+options:
+  bundleIdPrefix: dev.gem
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+targets:
+  NotchBoard:
+    type: application
+    platform: macOS
+    sources: [NotchBoard]
+    info:
+      path: NotchBoard/Info.plist
+      properties:
+        LSMinimumSystemVersion: "14.0"
+        LSUIElement: true
+        CFBundleURLTypes:
+          - CFBundleURLName: dev.gem.notchboard
+            CFBundleURLSchemes: [notchboard]
+        NSAppleEventsUsageDescription: "NotchBoard sends a small AppleScript to your terminal or editor to detect the repository you are working in, so it can rank your boards."
+        NSCalendarsUsageDescription: "NotchBoard reads your calendars to show the next meeting countdown in the notch."
+        NSCalendarsFullAccessUsageDescription: "NotchBoard reads your calendars to show the next meeting countdown in the notch."
+        # Optional OAuth client IDs — leave empty to use personal tokens only.
+        OAuthGitHubClientID: ""
+        OAuthGitHubClientSecret: ""
+        OAuthLinearClientID: ""
+        OAuthLinearClientSecret: ""
+        OAuthJiraClientID: ""
+        OAuthJiraClientSecret: ""
+        OAuthAzureClientID: ""
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.gem.NotchBoard
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: "5.10"
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "-"
+        ENABLE_HARDENED_RUNTIME: YES
+        ENABLE_APP_SANDBOX: NO
+  NotchBoardTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources: [NotchBoardTests]
+    dependencies:
+      - target: NotchBoard
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/NotchBoard.app/Contents/MacOS/NotchBoard
+        BUNDLE_LOADER: $(TEST_HOST)
+schemes:
+  NotchBoard:
+    build:
+      targets: { NotchBoard: all }
+    test:
+      targets: [NotchBoardTests]

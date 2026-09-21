@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>dev.gem.notchboard</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>notchboard</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>14.0</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>NotchBoard sends a small AppleScript to your terminal or editor to detect the repository you are working in, so it can rank your boards.</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>NotchBoard reads your calendars to show the next meeting countdown in the notch.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>NotchBoard reads your calendars to show the next meeting countdown in the notch.</string>
+	<key>OAuthAzureClientID</key>
+	<string></string>
+	<key>OAuthGitHubClientID</key>
+	<string></string>
+	<key>OAuthGitHubClientSecret</key>
+	<string></string>
+	<key>OAuthJiraClientID</key>
+	<string></string>
+	<key>OAuthJiraClientSecret</key>
+	<string></string>
+	<key>OAuthLinearClientID</key>
+	<string></string>
+	<key>OAuthLinearClientSecret</key>
+	<string></string>
+</dict>
+</plist>

@@ -1,0 +1,39 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Packaging / local release artifacts
+dist/
+*.dmg
+NotchBoard-*.zip
+
+# Website (Next.js)
+website/node_modules/
+website/.next/
+website/out/
+website/.preview*.png
+website/.playwright-mcp/
+
+# Secrets & local overrides (never commit real OAuth clients)
+*.xcconfig.local
+.env
+.env.*
+!.env.example
+
+# IDE / agent tooling (local only)
+.cursor/
+.agents/
+.vscode/
+
+# macOS
+.DS_Store
+*.swp
+*~
