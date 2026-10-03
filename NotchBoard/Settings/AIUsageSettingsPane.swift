@@ -187,7 +187,7 @@ struct AIUsageSettingsPane: View {
         if let status = usage.statuses[source], let label = status.label, status != .disabled {
             Text(label)
                 .font(.caption2)
-                .foregroundStyle(isError(status) ? .red : .secondary)
+                .foregroundStyle(isError(status) ? Color.red : Color.secondary)
                 .lineLimit(1)
                 .padding(.horizontal, 6)
                 .padding(.vertical, 1)
