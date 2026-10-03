@@ -11,6 +11,7 @@ struct NotchContentView: View {
     @Environment(FocusSessionStore.self) private var session
     @Environment(FocusTargetStore.self) private var focusTarget
     @Environment(MeetingCountdownStore.self) private var meeting
+    @Environment(AIUsageStore.self) private var aiUsage
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Query(sort: \Board.name) private var boards: [Board]
 
@@ -76,6 +77,7 @@ struct NotchContentView: View {
         case .boardDetail: return "NotchBoard board detail"
         case .cardDetail: return "NotchBoard task detail"
         case .createBoard: return "NotchBoard create board"
+        case .aiUsage: return "NotchBoard AI usage"
         }
     }
 
@@ -88,6 +90,7 @@ struct NotchContentView: View {
         case .boardDetail: return "Browse cards. Back returns to focus list."
         case .cardDetail: return "Task details. Set Focus or Track time."
         case .createBoard: return "Create a new board for a connected provider."
+        case .aiUsage: return "Token usage and spend per AI tool. Back returns to focus list."
         }
     }
 
@@ -95,7 +98,7 @@ struct NotchContentView: View {
 
     private var compactBody: some View {
         Group {
-            if store.connectedServices.isEmpty {
+            if store.connectedServices.isEmpty && aiUsage.compactLabel == nil {
                 compactEmpty
             } else if session.isActive, let title = session.displayTitle {
                 HStack(spacing: IslandLayout.space2) {
@@ -135,6 +138,19 @@ struct NotchContentView: View {
                     .foregroundStyle(IslandColor.textPrimary.opacity(0.92))
                     .lineLimit(1)
                     .id(meeting.tick)
+            } else if let aiLabel = aiUsage.compactLabel {
+                HStack(spacing: IslandLayout.space2) {
+                    Image(systemName: "sparkles")
+                        .font(IslandType.micro)
+                        .foregroundStyle(IslandColor.sessionTeal.opacity(0.9))
+                    Text(aiLabel)
+                        .font(IslandType.meta)
+                        .monospacedDigit()
+                        .foregroundStyle(IslandColor.textPrimary.opacity(0.92))
+                        .lineLimit(1)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("AI spend today \(aiLabel)")
             } else if let top = rankedBoards.first.flatMap({ board(for: $0) }) {
                 HStack(spacing: IslandLayout.space2) {
                     ServiceGlyph(service: ServiceKind(rawValue: top.service) ?? .trello)
@@ -202,6 +218,10 @@ struct NotchContentView: View {
                         .transition(islandRouteTransition)
                 case .createBoard(let service):
                     CreateBoardView(service: service)
+                        .frame(maxHeight: .infinity)
+                        .transition(islandRouteTransition)
+                case .aiUsage:
+                    AIUsageView()
                         .frame(maxHeight: .infinity)
                         .transition(islandRouteTransition)
                 case .focusList:
@@ -399,6 +419,9 @@ struct NotchContentView: View {
 
             Spacer(minLength: 0)
 
+            if aiUsage.isEnabled {
+                aiUsageButton
+            }
             if !store.connectedServices.isEmpty {
                 createBoardButton
             }
@@ -421,6 +444,31 @@ struct NotchContentView: View {
         .buttonStyle(IslandPressButtonStyle())
         .help("Create board")
         .accessibilityLabel("Create board")
+    }
+
+    private var aiUsageButton: some View {
+        Button {
+            withAnimation(IslandMotion.viewSwitch(reduceMotion: reduceMotion)) {
+                ui.route = .aiUsage
+            }
+        } label: {
+            HStack(spacing: IslandLayout.space1) {
+                Image(systemName: "sparkles")
+                    .font(IslandType.micro)
+                if aiUsage.totalToday.requests > 0 || aiUsage.totalToday.costUSD > 0 {
+                    Text(AIUsageFormat.cost(aiUsage.totalToday.costUSD, partial: aiUsage.totalToday.costIsPartial))
+                        .font(IslandType.micro)
+                        .monospacedDigit()
+                }
+            }
+            .foregroundStyle(IslandColor.textSecondary)
+            .padding(.horizontal, 6)
+            .frame(minWidth: IslandLayout.hitTarget, minHeight: IslandLayout.hitTarget)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(IslandPressButtonStyle())
+        .help("AI usage")
+        .accessibilityLabel("AI usage")
     }
 
     private func openCreateBoard() {

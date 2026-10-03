@@ -6,6 +6,7 @@ import SwiftUI
 enum SettingsTab: String, CaseIterable, Identifiable {
     case general
     case accounts
+    case aiUsage
     case sessions
     case ranking
     case schedule
@@ -19,6 +20,7 @@ enum SettingsTab: String, CaseIterable, Identifiable {
         switch self {
         case .general: "General"
         case .accounts: "Accounts"
+        case .aiUsage: "AI Usage"
         case .sessions: "Sessions"
         case .ranking: "Ranking"
         case .schedule: "Schedule"
@@ -32,6 +34,7 @@ enum SettingsTab: String, CaseIterable, Identifiable {
         switch self {
         case .general: "gearshape"
         case .accounts: "person.crop.circle"
+        case .aiUsage: "sparkles"
         case .sessions: "timer"
         case .ranking: "list.number"
         case .schedule: "calendar"
@@ -222,6 +225,8 @@ private struct SettingsDetailView: View {
                 GeneralSettingsPane()
             case .accounts:
                 AccountsSettingsPane()
+            case .aiUsage:
+                AIUsageSettingsPane()
             case .sessions:
                 SessionsSettingsPane()
             case .ranking:

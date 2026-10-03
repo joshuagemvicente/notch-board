@@ -15,6 +15,7 @@ final class NotchController {
     private let sessionStore: FocusSessionStore
     private let focusTargetStore: FocusTargetStore
     private let meetingStore: MeetingCountdownStore
+    private let aiUsageStore: AIUsageStore
     private let theme: ThemeProvider
     private let ui = NotchUIState()
     private let hoverGate = HoverGate()
@@ -30,6 +31,7 @@ final class NotchController {
         sessionStore: FocusSessionStore,
         focusTargetStore: FocusTargetStore,
         meetingStore: MeetingCountdownStore,
+        aiUsageStore: AIUsageStore,
         theme: ThemeProvider
     ) {
         self.store = store
@@ -37,6 +39,7 @@ final class NotchController {
         self.sessionStore = sessionStore
         self.focusTargetStore = focusTargetStore
         self.meetingStore = meetingStore
+        self.aiUsageStore = aiUsageStore
         self.theme = theme
     }
 
@@ -109,6 +112,7 @@ final class NotchController {
             .environment(sessionStore)
             .environment(focusTargetStore)
             .environment(meetingStore)
+            .environment(aiUsageStore)
             .environment(theme)
             .modelContainer(container)
 

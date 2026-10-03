@@ -60,13 +60,15 @@ final class SettingsWindowController: NSWindowController, NSWindowDelegate {
         guard let store = AppDelegate.sharedStore,
               let container = AppDelegate.sharedContainer,
               let meeting = AppDelegate.sharedMeetingStore,
-              let theme = AppDelegate.sharedTheme
+              let theme = AppDelegate.sharedTheme,
+              let aiUsage = AppDelegate.sharedAIUsage
         else { return }
 
         let root = SettingsView()
             .environment(store)
             .environment(meeting)
             .environment(theme)
+            .environment(aiUsage)
             .preferredColorScheme(theme.preferredColorScheme)
             .modelContainer(container)
             .environment(\.layoutDirection, .leftToRight)

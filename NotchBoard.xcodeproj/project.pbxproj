@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C1A694703F3E1A6C8562FE1C /* AIUsageModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB4664C902C8F768CACC2AD /* AIUsageModels.swift */; };
+		B827E3B74D6CCDAEB40357DC /* AIModelPricing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85498443A53D1F9585A8D9C /* AIModelPricing.swift */; };
+		5225A6609B131B1A3F6AE365 /* AIUsageLogParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D85F85065801581EEEFF1 /* AIUsageLogParsers.swift */; };
+		0B86065542F8B353B6D0D6E3 /* AIUsageScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D352C84C40FD1650BF143B7D /* AIUsageScanner.swift */; };
+		4FFE3407F88831F0467D4D17 /* AIUsageAPIClients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E02BA889A44F8CEA53D1054 /* AIUsageAPIClients.swift */; };
+		CEA44B69701012BD1C8C2AC0 /* AIUsageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7590A6533EB13345B019201C /* AIUsageStore.swift */; };
+		80054255F89C16AB192F6045 /* AIUsageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D2EDB20D7083BD4F38A84F /* AIUsageView.swift */; };
+		2A210F59E19FC29A0452CD60 /* AIUsageSettingsPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A84DED605C11506D31F8F8 /* AIUsageSettingsPane.swift */; };
+		45AFD7652963C355F13ED905 /* AIUsageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4F0F13A4270F92D4AA5261 /* AIUsageTests.swift */; };
 		03C31E88164EE34E2153707B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5D8674971A5E69C2673588F /* Assets.xcassets */; };
 		03EA0CB96C7D9424E2CC66FF /* BoardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAEBD80143B1B70E0478F9F /* BoardProvider.swift */; };
 		0E89DBCC435AC0C3BB3A590B /* SessionsSettingsPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0102B0CF505D7ECDE8507C1 /* SessionsSettingsPane.swift */; };
@@ -83,6 +92,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BEB4664C902C8F768CACC2AD /* AIUsageModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIUsageModels.swift; sourceTree = "<group>"; };
+		B85498443A53D1F9585A8D9C /* AIModelPricing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIModelPricing.swift; sourceTree = "<group>"; };
+		F93D85F85065801581EEEFF1 /* AIUsageLogParsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIUsageLogParsers.swift; sourceTree = "<group>"; };
+		D352C84C40FD1650BF143B7D /* AIUsageScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIUsageScanner.swift; sourceTree = "<group>"; };
+		9E02BA889A44F8CEA53D1054 /* AIUsageAPIClients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIUsageAPIClients.swift; sourceTree = "<group>"; };
+		7590A6533EB13345B019201C /* AIUsageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIUsageStore.swift; sourceTree = "<group>"; };
+		68D2EDB20D7083BD4F38A84F /* AIUsageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIUsageView.swift; sourceTree = "<group>"; };
+		E1A84DED605C11506D31F8F8 /* AIUsageSettingsPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIUsageSettingsPane.swift; sourceTree = "<group>"; };
+		ED4F0F13A4270F92D4AA5261 /* AIUsageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIUsageTests.swift; sourceTree = "<group>"; };
 		00A768B2756A329E67343EA9 /* MeetingCountdownStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCountdownStore.swift; sourceTree = "<group>"; };
 		01FBCEBF386E17D06D679AA8 /* BoardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardStore.swift; sourceTree = "<group>"; };
 		0BFD3AE995F98BC75DEA2AB3 /* GraphQLClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLClient.swift; sourceTree = "<group>"; };
@@ -152,6 +170,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		7C1689A603463458B2EF72AE /* AIUsage */ = {
+			isa = PBXGroup;
+			children = (
+				BEB4664C902C8F768CACC2AD /* AIUsageModels.swift */,
+				B85498443A53D1F9585A8D9C /* AIModelPricing.swift */,
+				F93D85F85065801581EEEFF1 /* AIUsageLogParsers.swift */,
+				D352C84C40FD1650BF143B7D /* AIUsageScanner.swift */,
+				9E02BA889A44F8CEA53D1054 /* AIUsageAPIClients.swift */,
+				7590A6533EB13345B019201C /* AIUsageStore.swift */,
+			);
+			path = AIUsage;
+			sourceTree = "<group>";
+		};
 		01B4539D795B813A41F69F21 /* ActiveRepo */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,6 +259,7 @@
 		ACA58CA219BB549AC47B0277 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				68D2EDB20D7083BD4F38A84F /* AIUsageView.swift */,
 				137EBA146A710B35014BD866 /* BoardDetailView.swift */,
 				D04F4354BD5D1D02778D6A33 /* BoardRowView.swift */,
 				59DDD5D119524C9FBB624525 /* CardDetailView.swift */,
@@ -244,6 +276,7 @@
 		B83AD88807B115BC1C33694C /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				E1A84DED605C11506D31F8F8 /* AIUsageSettingsPane.swift */,
 				BE4F1EEB44056A462B4D54CF /* AboutSettingsPane.swift */,
 				4EF87877504183A92B635E75 /* AccountsSettingsPane.swift */,
 				8AB3FBD79151DEC4AD8AD261 /* ActiveRepoSettingsPane.swift */,
@@ -279,6 +312,7 @@
 		E084DF77E8EA0289FBEA5987 /* NotchBoardTests */ = {
 			isa = PBXGroup;
 			children = (
+				ED4F0F13A4270F92D4AA5261 /* AIUsageTests.swift */,
 				11DDCB015DF44246B7A118BF /* CardDragPayloadTests.swift */,
 				92F839BF1342564B8B2E96BE /* CardMoveGenerationTests.swift */,
 				71956978E45D178CE010CEAB /* DecoderAndParserTests.swift */,
@@ -302,6 +336,7 @@
 			children = (
 				A5D8674971A5E69C2673588F /* Assets.xcassets */,
 				7DB5C0867ECE0479EA527728 /* Info.plist */,
+				7C1689A603463458B2EF72AE /* AIUsage */,
 				01B4539D795B813A41F69F21 /* ActiveRepo */,
 				FFCAE68D3F9016CB966F1152 /* App */,
 				28B72FEC55EB89DA7C0A7F26 /* Design */,
@@ -418,6 +453,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A210F59E19FC29A0452CD60 /* AIUsageSettingsPane.swift in Sources */,
+				80054255F89C16AB192F6045 /* AIUsageView.swift in Sources */,
+				CEA44B69701012BD1C8C2AC0 /* AIUsageStore.swift in Sources */,
+				4FFE3407F88831F0467D4D17 /* AIUsageAPIClients.swift in Sources */,
+				0B86065542F8B353B6D0D6E3 /* AIUsageScanner.swift in Sources */,
+				5225A6609B131B1A3F6AE365 /* AIUsageLogParsers.swift in Sources */,
+				B827E3B74D6CCDAEB40357DC /* AIModelPricing.swift in Sources */,
+				C1A694703F3E1A6C8562FE1C /* AIUsageModels.swift in Sources */,
 				9B8304F8039648C52AD9EED2 /* AboutSettingsPane.swift in Sources */,
 				56F173B6F7DC989D0B437D93 /* Account.swift in Sources */,
 				2182EDE19EC0553AE7625D6F /* AccountsSettingsPane.swift in Sources */,
@@ -480,6 +523,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45AFD7652963C355F13ED905 /* AIUsageTests.swift in Sources */,
 				B226583D339F9295D93E61FF /* CardDragPayloadTests.swift in Sources */,
 				5C9E75F27752C6008FF1E6E5 /* CardMoveGenerationTests.swift in Sources */,
 				65466935EAC4AF24218BA7E1 /* DecoderAndParserTests.swift in Sources */,

@@ -64,6 +64,7 @@ final class NotchUIState {
         case boardDetail(boardID: String)
         case cardDetail(boardID: String, cardID: String)
         case createBoard(service: ServiceKind)
+        case aiUsage
     }
 
     var route: IslandRoute = .focusList
@@ -79,7 +80,7 @@ final class NotchUIState {
             return min(Self.maxPanelWidth, max(860, fromNotch))
         }
         switch route {
-        case .boardDetail, .cardDetail, .createBoard:
+        case .boardDetail, .cardDetail, .createBoard, .aiUsage:
             return min(Self.maxPanelWidth, max(900, fromNotch))
         case .focusList:
             break
@@ -94,6 +95,8 @@ final class NotchUIState {
         switch route {
         case .boardDetail, .cardDetail:
             return 340
+        case .aiUsage:
+            return 320
         case .createBoard:
             return 280
         case .focusList:

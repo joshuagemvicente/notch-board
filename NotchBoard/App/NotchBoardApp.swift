@@ -10,6 +10,7 @@ struct NotchBoardApp: App {
     @State private var store: BoardStore
     @State private var meetingStore: MeetingCountdownStore
     @State private var theme: ThemeProvider
+    @State private var aiUsage: AIUsageStore
 
     init() {
         let schema = Schema([Account.self, Board.self, Card.self, Column.self])
@@ -21,16 +22,20 @@ struct NotchBoardApp: App {
         let store = BoardStore(modelContext: container.mainContext)
         let meeting = MeetingCountdownStore()
         let theme = ThemeProvider()
+        let aiUsage = AIUsageStore()
         _store = State(initialValue: store)
         _meetingStore = State(initialValue: meeting)
         _theme = State(initialValue: theme)
+        _aiUsage = State(initialValue: aiUsage)
         store.start()
+        aiUsage.start()
 
         // Defer notch presentation until AppKit is ready (after init).
         AppDelegate.sharedStore = store
         AppDelegate.sharedContainer = container
         AppDelegate.sharedMeetingStore = meeting
         AppDelegate.sharedTheme = theme
+        AppDelegate.sharedAIUsage = aiUsage
     }
 
     var body: some Scene {
@@ -56,6 +61,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     static var sharedContainer: ModelContainer?
     static var sharedMeetingStore: MeetingCountdownStore?
     static var sharedTheme: ThemeProvider?
+    static var sharedAIUsage: AIUsageStore?
 
     private var notchController: NotchController?
     private var sessionStore: FocusSessionStore?
@@ -69,7 +75,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         guard let store = Self.sharedStore,
               let container = Self.sharedContainer,
               let meeting = Self.sharedMeetingStore,
-              let theme = Self.sharedTheme
+              let theme = Self.sharedTheme,
+              let aiUsage = Self.sharedAIUsage
         else { return }
         let session = FocusSessionStore()
         let focusTarget = FocusTargetStore()
@@ -82,6 +89,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             sessionStore: session,
             focusTargetStore: focusTarget,
             meetingStore: meeting,
+            aiUsageStore: aiUsage,
             theme: theme
         )
         notchController = controller
@@ -90,6 +98,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ notification: Notification) {
         notchController?.stop()
+        Self.sharedAIUsage?.stop()
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {

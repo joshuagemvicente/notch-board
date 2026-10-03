@@ -110,6 +110,26 @@ Optional OAuth: set `OAuth*` keys in `project.yml` / Info.plist and register red
 
 ---
 
+## AI usage
+
+Track tokens and spend across AI coding tools: open the island and tap **✦**, or configure it under **Settings → AI Usage**.
+
+| Source | How it's read | What you see |
+|--------|---------------|--------------|
+| **Claude Code** | `~/.claude/projects/**/*.jsonl` (and `~/.config/claude/projects`) | Tokens + estimated cost |
+| **Codex CLI** | `~/.codex/sessions/**/rollout-*.jsonl` | Tokens + estimated cost |
+| **OpenCode** | `~/.local/share/opencode/storage/message/**.json` | Tokens + reported cost (estimated when 0) |
+| **Gemini CLI** | `~/.gemini/tmp/*/chats/session-*.json` | Tokens + estimated cost |
+| **Anthropic API** | `GET /v1/organizations/cost_report` with an **Admin** key (`sk-ant-admin…`) | Billed USD |
+| **OpenAI API** | `GET /v1/organization/costs` with an **Admin** key | Billed USD |
+
+- Local logs never leave the Mac. Admin keys live in the Keychain.
+- Estimates use list prices. Claude prices are built in; others come from the public [LiteLLM price list](https://github.com/BerriAI/litellm) (refreshed daily, can be turned off). A `+` after a cost means some models had no known price.
+- Subscription plans (Claude Pro/Max, ChatGPT Plus/Pro) aren't billed per token, so treat local estimates as "API-equivalent" value, not your bill.
+- Optional: a monthly budget bar, and today's spend in the collapsed notch.
+
+---
+
 ## Test
 
 **SweetPad:** Command Palette → **SweetPad: Test**
@@ -138,7 +158,7 @@ Open [http://localhost:3000](http://localhost:3000). More in [`website/README.md
 ## Project map
 
 ```
-NotchBoard/     App, notch UI, providers, focus engine
+NotchBoard/     App, notch UI, providers, focus engine, AI usage
 NotchBoardTests Unit tests
 project.yml     XcodeGen project definition
 skills/         Local agent / design skills
